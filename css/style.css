@@ -1,0 +1,195 @@
+/* =====================================================
+   1. CORES E FONTES (mude aqui e o site inteiro muda)
+   ===================================================== */
+:root {
+  --roxo: #6c3fff;          /* painel lateral */
+  --roxo-suave: #ece6ff;    /* seleção / destaques leves */
+  --fundo: #f1f1f1;         /* painel claro */
+  --cinza: #c4c4c4;         /* campos */
+  --verde: #00b85c;         /* botão principal */
+  --alerta: #e8765f;        /* notas baixas / atenção */
+  --texto: #1d1b26;
+  --texto-suave: #6b6878;
+
+  --fonte: "DM Sans", system-ui, sans-serif;
+  --fonte-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* =====================================================
+   2. BASE
+   ===================================================== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  color: var(--texto);
+  background: var(--roxo);   /* o roxo aparece atrás do painel claro arredondado */
+}
+
+h1, h2, h3, p { margin: 0; }
+
+/* =====================================================
+   3. TELAS (só a que tem .ativa aparece)
+   ===================================================== */
+.tela { display: none; min-height: 100vh; }
+.tela.ativa { display: grid; }
+
+#tela-login  { grid-template-columns: 1fr 1.6fr; }
+#tela-turmas { grid-template-columns: 280px 1fr; }
+
+/* Painel roxo (esquerda) */
+.painel-roxo {
+  padding: 48px 40px;
+  color: #fff;
+}
+.painel-roxo h1 {
+  font-family: var(--fonte-mono);
+  font-size: 1.8rem;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+.painel-roxo p { opacity: .85; line-height: 1.5; max-width: 28ch; }
+
+/* Painel claro (direita) com canto arredondado, como na imagem */
+.painel-claro {
+  background: var(--fundo);
+  border-radius: 28px 0 0 28px;
+  padding: 48px;
+}
+.centro { display: flex; align-items: center; justify-content: center; }
+
+.titulo-mono { font-family: var(--fonte-mono); font-weight: 500; }
+.titulo-mono.claro { color: #fff; margin-bottom: 24px; }
+
+/* =====================================================
+   4. FORMULÁRIO E BOTÕES
+   ===================================================== */
+.formulario {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.formulario h2 { text-align: center; font-size: 1.4rem; margin-bottom: 18px; }
+
+input[type="text"], input[type="password"] {
+  font: inherit;
+  padding: 14px 16px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: var(--cinza);
+  color: var(--texto);
+}
+input::placeholder { color: #6f6f6f; }
+input:focus { outline: none; border-color: var(--roxo); background: #fff; }
+
+.botao-verde {
+  font: inherit; font-weight: 700;
+  margin-top: 12px;
+  padding: 14px;
+  border: 0;
+  border-radius: 999px;       /* formato pílula */
+  background: var(--verde);
+  color: #fff;
+  cursor: pointer;
+  transition: filter .15s;
+}
+.botao-verde:hover { filter: brightness(.95); }
+
+.botao-claro, .botao-texto {
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+}
+.botao-claro {
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+  transition: background .15s;
+}
+.botao-claro:hover { background: rgba(255,255,255,.26); }
+.botao-texto { background: none; border: 0; color: #fff; opacity: .8; padding: 10px; }
+.botao-texto:hover { opacity: 1; }
+
+.erro { color: var(--alerta); min-height: 1.2em; font-size: .9rem; text-align: center; }
+.dica { color: var(--texto-suave); font-size: .85rem; text-align: center; margin-top: 8px; }
+
+/* =====================================================
+   5. TELA DE TURMAS
+   ===================================================== */
+.lateral { display: flex; flex-direction: column; }
+.lista-turmas { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.item-turma {
+  font: inherit;
+  text-align: left;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background .15s;
+}
+.item-turma:hover { background: rgba(255,255,255,.12); }
+.item-turma.ativo { background: #fff; color: var(--roxo); font-weight: 700; }
+
+.acoes { display: flex; flex-direction: column; gap: 8px; }
+
+.cabecalho { margin-bottom: 28px; }
+.cabecalho h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.cabecalho p { color: var(--texto-suave); }
+
+.duas-colunas {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 1.6fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Lista de alunos */
+.lista-alunos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.item-aluno {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 14px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.item-aluno small { color: var(--texto-suave); }
+.item-aluno:hover { border-color: var(--roxo-suave); }
+.item-aluno.ativo { border-color: var(--roxo); background: var(--roxo-suave); }
+
+/* Detalhes do aluno */
+.detalhe { background: #fff; border-radius: 16px; padding: 28px; min-height: 260px; }
+.detalhe h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.detalhe .matricula { color: var(--texto-suave); margin-bottom: 20px; }
+.vazio { color: var(--texto-suave); }
+
+.indicadores { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip { padding: 6px 12px; border-radius: 999px; background: var(--fundo); font-size: .9rem; }
+.chip.ok { background: #d9f5e6; color: #007a3d; }
+.chip.atencao { background: #fde4de; color: #b3402b; }
+
+.nota { display: grid; grid-template-columns: 110px 1fr 40px; align-items: center; gap: 12px; margin-bottom: 12px; }
+.barra { height: 8px; border-radius: 99px; background: var(--fundo); overflow: hidden; }
+.barra span { display: block; height: 100%; border-radius: 99px; background: var(--roxo); }
+.barra span.baixa { background: var(--alerta); }
+.nota b { text-align: right; }
+
+/* =====================================================
+   6. CELULAR / TELAS PEQUENAS
+   ===================================================== */
+@media (max-width: 820px) {
+  #tela-login, #tela-turmas { grid-template-columns: 1fr; }
+  .painel-roxo { padding: 32px 24px; }
+  .painel-claro { border-radius: 28px 28px 0 0; padding: 32px 24px; }
+  .duas-colunas { grid-template-columns: 1fr; }
+  .lista-turmas { flex: none; margin-bottom: 20px; }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aprender no Tempo Certo</title>
+
+  <!-- Fontes (precisa de internet; se não tiver, o navegador usa as fontes de reserva) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- ============ TELA 1: LOGIN DO PROFESSOR ============ -->
+  <section id="tela-login" class="tela ativa">
+    <!-- Lado roxo (identidade do projeto) -->
+    <aside class="painel-roxo">
+      <h1>Aprender no<br>Tempo Certo</h1>
+      <p>Identificar cedo as dificuldades de aprendizagem para agir a tempo.</p>
+    </aside>
+
+    <!-- Lado claro com o formulário -->
+    <main class="painel-claro centro">
+      <form id="form-login" class="formulario">
+        <h2 class="titulo-mono">Login</h2>
+        <input id="usuario" type="text" placeholder="Usuário" autocomplete="username" required>
+        <input id="senha" type="password" placeholder="Senha" autocomplete="current-password" required>
+        <p id="erro-login" class="erro" role="alert"></p>
+        <button type="submit" class="botao-verde">Entrar</button>
+        <p class="dica">Demonstração: usuário <b>professor</b> · senha <b>1234</b></p>
+      </form>
+    </main>
+  </section>
+
+  <!-- ============ TELA 2: TURMAS E ALUNOS ============ -->
+  <section id="tela-turmas" class="tela">
+    <!-- Barra lateral roxa: lista de turmas + ações -->
+    <aside class="painel-roxo lateral">
+      <h2 class="titulo-mono claro">Turmas</h2>
+      <nav id="lista-turmas" class="lista-turmas"></nav>
+
+      <div class="acoes">
+        <!-- O input de arquivo fica escondido; o label funciona como botão -->
+        <label class="botao-claro">
+          Importar planilha (CSV)
+          <input id="arquivo-csv" type="file" accept=".csv" hidden>
+        </label>
+        <button id="btn-sair" class="botao-texto">Sair</button>
+      </div>
+    </aside>
+
+    <!-- Área clara: alunos da turma + detalhes do aluno -->
+    <main class="painel-claro">
+      <header class="cabecalho">
+        <h2 id="titulo-turma" class="titulo-mono">Selecione uma turma</h2>
+        <p id="resumo-turma"></p>
+      </header>
+
+      <div class="duas-colunas">
+        <ul id="lista-alunos" class="lista-alunos"></ul>
+        <article id="detalhe-aluno" class="detalhe">
+          <p class="vazio">Escolha um aluno para ver as informações.</p>
+        </article>
+      </div>
+    </main>
+  </section>
+
+  <!-- Ordem importa: primeiro os dados, depois a lógica -->
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
