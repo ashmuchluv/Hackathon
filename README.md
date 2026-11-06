@@ -8,7 +8,6 @@ Projeto do hackathon *"Educação que chega: tecnologia contra as barreiras do a
 
 **https://ashmuchluv.github.io/Hackathon/**
 
-Login de demonstração: usuário `professor` · senha `1234`
 
 ## O problema
 
