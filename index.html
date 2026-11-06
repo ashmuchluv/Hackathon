@@ -14,28 +14,42 @@
 </head>
 <body>
 
-  <!-- ============ TELA 1: LOGIN DO PROFESSOR ============ -->
+  <!-- ============ LOGIN ÚNICO (aluno ou professor) ============ -->
   <section id="tela-login" class="tela ativa">
-    <!-- Lado roxo (identidade do projeto) -->
     <aside class="painel-roxo">
       <h1>Aprender no<br>Tempo Certo</h1>
       <p>Identificar cedo as dificuldades de aprendizagem para agir a tempo.</p>
     </aside>
 
-    <!-- Lado claro com o formulário -->
     <main class="painel-claro centro">
       <form id="form-login" class="formulario">
         <h2 class="titulo-mono">Login</h2>
-        <input id="usuario" type="text" placeholder="Usuário" autocomplete="username" required>
+
+        <!-- Escolha de quem está entrando (veja login.js) -->
+        <div class="seletor" role="group" aria-label="Tipo de acesso">
+          <button type="button" class="opcao ativo" data-tipo="aluno">Aluno</button>
+          <button type="button" class="opcao" data-tipo="professor">Professor</button>
+        </div>
+
+        <input id="usuario" type="text" inputmode="numeric" placeholder="RA (Registro Acadêmico)" autocomplete="username" required>
         <input id="senha" type="password" placeholder="Senha" autocomplete="current-password" required>
         <p id="erro-login" class="erro" role="alert"></p>
         <button type="submit" class="botao-verde">Entrar</button>
-        <p class="dica">Demonstração: usuário <b>professor</b> · senha <b>1234</b></p>
+
+        <!-- Só a dica do tipo escolhido aparece -->
+        <p class="dica" data-para="aluno">
+          Demonstração (senha <b>1234</b>):<br>
+          RA <b>2026002</b> · Bruno, com notas abaixo da média<br>
+          RA <b>2026001</b> · Ana, com notas acima da média
+        </p>
+        <p class="dica" data-para="professor" hidden>
+          Demonstração: usuário <b>professor</b> · senha <b>1234</b>
+        </p>
       </form>
     </main>
   </section>
 
-  <!-- ============ TELA 2: TURMAS E ALUNOS ============ -->
+  <!-- ============ ÁREA DO PROFESSOR: TURMAS E ALUNOS ============ -->
   <section id="tela-turmas" class="tela">
     <!-- Barra lateral roxa: lista de turmas + ações -->
     <aside class="painel-roxo lateral">
@@ -68,8 +82,81 @@
     </main>
   </section>
 
+  <!-- ============ ÁREA DO ALUNO ============ -->
+  <section id="tela-aluno" class="tela">
+
+    <!-- Menu lateral roxo -->
+    <aside class="painel-roxo lateral">
+      <p id="ola" class="ola"></p>
+      <h2 class="titulo-mono claro">Área do aluno</h2>
+
+      <nav class="lista-menu">
+        <!-- data-secao diz qual seção abrir (veja aluno.js) -->
+        <button class="item-menu ativo" data-secao="avisos">Avisos</button>
+        <button class="item-menu" data-secao="notas">Notas</button>
+        <button class="item-menu" data-secao="chat">Chat com IA</button>
+      </nav>
+
+      <div class="acoes">
+        <button id="btn-sair-aluno" class="botao-texto">Sair</button>
+      </div>
+    </aside>
+
+    <!-- Conteúdo: só uma seção fica visível por vez -->
+    <main class="painel-claro">
+
+      <!-- AVISOS -->
+      <section id="secao-avisos" class="secao ativa">
+        <header class="cabecalho">
+          <h2 class="titulo-mono">Avisos</h2>
+          <p>Recados dos seus professores.</p>
+        </header>
+        <div id="lista-avisos" class="pilha"></div>
+      </section>
+
+      <!-- NOTAS -->
+      <section id="secao-notas" class="secao">
+        <header class="cabecalho">
+          <h2 class="titulo-mono">Notas</h2>
+          <p id="resumo-notas"></p>
+        </header>
+        <div id="lista-notas" class="grade"></div>
+      </section>
+
+      <!-- CHAT COM IA -->
+      <section id="secao-chat" class="secao">
+        <header class="cabecalho">
+          <h2 class="titulo-mono">Chat com IA</h2>
+          <p id="aviso-chat"></p>
+        </header>
+
+        <div id="disciplinas-chat" class="disciplinas"></div>
+
+        <div id="area-chat" class="chat" hidden>
+          <div id="mensagens" class="mensagens"></div>
+
+          <!-- Atalhos para o aluno não precisar digitar tudo -->
+          <div class="sugestoes">
+            <button type="button" data-texto="Explique o conteúdo">Explicar o conteúdo</button>
+            <button type="button" data-texto="Quero um exercício">Fazer um exercício</button>
+            <button type="button" data-texto="Tenho uma dúvida">Tirar dúvida</button>
+          </div>
+
+          <form id="form-chat" class="linha-chat">
+            <input id="texto-chat" type="text" placeholder="Digite sua mensagem..." autocomplete="off">
+            <button type="submit" class="botao-verde">Enviar</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
   <!-- Ordem importa: primeiro os dados, depois a lógica -->
   <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data-aluno.js"></script>
+  <script src="login.js"></script>
+  <script src="professor.js"></script>
+  <script src="aluno.js"></script>
 </body>
 </html>

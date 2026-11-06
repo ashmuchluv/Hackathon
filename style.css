@@ -19,6 +19,7 @@
    2. BASE
    ===================================================== */
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* faz o atributo hidden sempre esconder */
 
 body {
   margin: 0;
@@ -36,7 +37,7 @@ h1, h2, h3, p { margin: 0; }
 .tela.ativa { display: grid; }
 
 #tela-login  { grid-template-columns: 1fr 1.6fr; }
-#tela-turmas { grid-template-columns: 280px 1fr; }
+#tela-turmas, #tela-aluno { grid-template-columns: 280px 1fr; }
 
 /* Painel roxo (esquerda) */
 .painel-roxo {
@@ -87,8 +88,7 @@ input:focus { outline: none; border-color: var(--roxo); background: #fff; }
 
 .botao-verde {
   font: inherit; font-weight: 700;
-  margin-top: 12px;
-  padding: 14px;
+  padding: 14px 24px;
   border: 0;
   border-radius: 999px;       /* formato pílula */
   background: var(--verde);
@@ -97,6 +97,7 @@ input:focus { outline: none; border-color: var(--roxo); background: #fff; }
   transition: filter .15s;
 }
 .botao-verde:hover { filter: brightness(.95); }
+.formulario .botao-verde { margin-top: 12px; }
 
 .botao-claro, .botao-texto {
   font: inherit;
@@ -117,7 +118,7 @@ input:focus { outline: none; border-color: var(--roxo); background: #fff; }
 .dica { color: var(--texto-suave); font-size: .85rem; text-align: center; margin-top: 8px; }
 
 /* =====================================================
-   5. TELA DE TURMAS
+   5. ÁREA DO PROFESSOR · TURMAS E ALUNOS
    ===================================================== */
 .lateral { display: flex; flex-direction: column; }
 .lista-turmas { display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -184,12 +185,105 @@ input:focus { outline: none; border-color: var(--roxo); background: #fff; }
 .nota b { text-align: right; }
 
 /* =====================================================
-   6. CELULAR / TELAS PEQUENAS
+   6. ÁREA DO ALUNO · MENU LATERAL
+   ===================================================== */
+.lateral { display: flex; flex-direction: column; }
+.ola { opacity: .85; margin-bottom: 4px; }
+.lista-menu { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.item-menu {
+  font: inherit; text-align: left; padding: 12px 16px; border: 0; border-radius: 10px;
+  background: transparent; color: #fff; cursor: pointer; transition: background .15s;
+}
+.item-menu:hover { background: rgba(255,255,255,.12); }
+.item-menu.ativo { background: #fff; color: var(--roxo); font-weight: 700; }
+
+/* =====================================================
+   7. ÁREA DO ALUNO · SEÇÕES (só a que tem .ativa aparece)
+   ===================================================== */
+.secao { display: none; }
+.secao.ativa { display: block; }
+
+.cabecalho { margin-bottom: 28px; }
+.cabecalho h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.cabecalho p { color: var(--texto-suave); }
+
+.pilha { display: flex; flex-direction: column; gap: 12px; }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+.cartao { background: #fff; border-radius: 16px; padding: 22px; }
+.cartao-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.cartao h3 { font-size: 1.05rem; }
+.cartao .meta { color: var(--texto-suave); font-size: .85rem; margin-bottom: 8px; }
+.cartao .texto { line-height: 1.5; }
+
+/* Etiquetas de status */
+.cartao .chip { padding: 5px 12px; font-size: .85rem; white-space: nowrap; }
+.chip.ok { background: #d9f5e6; color: #007a3d; }
+.chip.atencao { background: #fde4de; color: #b3402b; }
+
+/* Notas: barra de média */
+.notas-linha { color: var(--texto-suave); font-size: .9rem; margin: 6px 0 16px; }
+.cartao .nota { grid-template-columns: 50px 1fr 40px; margin-bottom: 0; }
+.barra { height: 8px; border-radius: 99px; background: var(--fundo); overflow: hidden; }
+.barra span { display: block; height: 100%; border-radius: 99px; background: var(--roxo); }
+.barra span.baixa { background: var(--alerta); }
+.nota b { text-align: right; }
+
+/* =====================================================
+   8. ÁREA DO ALUNO · CHAT
+   ===================================================== */
+.disciplinas { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.chip-disc {
+  font: inherit; padding: 10px 18px; border: 2px solid transparent; border-radius: 999px;
+  background: #fff; cursor: pointer; transition: border-color .15s;
+}
+.chip-disc:hover:not(:disabled) { border-color: var(--roxo-suave); }
+.chip-disc.ativo { border-color: var(--roxo); background: var(--roxo-suave); }
+.chip-disc:disabled { opacity: .45; cursor: not-allowed; }   /* bloqueada: nota acima da média */
+
+.chat { background: #fff; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+.mensagens { height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; }
+.msg { max-width: 80%; padding: 12px 16px; border-radius: 16px; line-height: 1.45; }
+.msg.ia  { align-self: flex-start; background: var(--fundo); border-bottom-left-radius: 4px; }
+.msg.eu  { align-self: flex-end; background: var(--roxo); color: #fff; border-bottom-right-radius: 4px; }
+.msg.digitando { opacity: .6; font-style: italic; }
+
+.sugestoes { display: flex; flex-wrap: wrap; gap: 8px; }
+.sugestoes button {
+  font: inherit; font-size: .85rem; padding: 6px 14px; border: 0; border-radius: 999px;
+  background: var(--roxo-suave); color: var(--roxo); cursor: pointer;
+}
+.linha-chat { display: flex; gap: 10px; }
+.linha-chat input { flex: 1; }
+
+/* =====================================================
+   9. LOGIN · SELETOR ALUNO / PROFESSOR
+   ===================================================== */
+.seletor {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  padding: 4px; margin-bottom: 6px;
+  background: var(--cinza); border-radius: 999px;
+}
+.seletor .opcao {
+  font: inherit; padding: 10px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--texto); cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.seletor .opcao.ativo { background: #fff; color: var(--roxo); font-weight: 700; }
+
+/* =====================================================
+   10. CELULAR / TELAS PEQUENAS
    ===================================================== */
 @media (max-width: 820px) {
-  #tela-login, #tela-turmas { grid-template-columns: 1fr; }
+  #tela-login, #tela-turmas, #tela-aluno { grid-template-columns: 1fr; }
   .painel-roxo { padding: 32px 24px; }
   .painel-claro { border-radius: 28px 28px 0 0; padding: 32px 24px; }
   .duas-colunas { grid-template-columns: 1fr; }
   .lista-turmas { flex: none; margin-bottom: 20px; }
+}
+
+@media (max-width: 820px) {
+  .lista-menu { flex: none; margin-bottom: 20px; }
+  .msg { max-width: 92%; }
 }

@@ -1,12 +1,14 @@
 /* =====================================================
-   LÓGICA DO SISTEMA
+   LÓGICA DA ÁREA DO PROFESSOR
    Organização deste arquivo:
    1. Atalhos e estado
    2. Funções utilitárias
-   3. Login
+   3. Entrada e saída (o login fica no login.js)
    4. Turmas e alunos (desenhar na tela)
    5. Importação de planilha CSV
    ===================================================== */
+
+(() => {   // isola as funções deste arquivo das dos outros
 
 /* ---------- 1. ATALHOS E ESTADO ---------- */
 const $ = (id) => document.getElementById(id);   // atalho para document.getElementById
@@ -51,26 +53,21 @@ function carregarTurmas() {
   return DADOS_EXEMPLO;
 }
 
-/* ---------- 3. LOGIN ---------- */
-$("form-login").addEventListener("submit", (evento) => {
-  evento.preventDefault();   // impede a página de recarregar
-
-  const ok = $("usuario").value.trim() === PROFESSOR.usuario &&
-             $("senha").value === PROFESSOR.senha;
-
-  if (!ok) {
-    $("erro-login").textContent = "Usuário ou senha incorretos.";
-    return;
-  }
-  $("erro-login").textContent = "";
+/* ---------- 3. ENTRADA E SAÍDA ----------
+   O login agora fica no login.js, que chama esta função
+   depois de conferir usuário e senha. */
+window.entrarProfessor = function () {
+  estado.turma = null;
+  estado.aluno = null;
+  $("titulo-turma").textContent = "Selecione uma turma";
+  $("resumo-turma").textContent = "";
+  $("lista-alunos").replaceChildren();
+  $("detalhe-aluno").replaceChildren(el("p", "vazio", "Escolha um aluno para ver as informações."));
   mostrarTela("tela-turmas");
   desenharTurmas();
-});
+};
 
-$("btn-sair").addEventListener("click", () => {
-  $("form-login").reset();
-  mostrarTela("tela-login");
-});
+$("btn-sair").addEventListener("click", () => window.voltarAoLogin());
 
 /* ---------- 4. TURMAS E ALUNOS ---------- */
 
@@ -218,3 +215,5 @@ $("arquivo-csv").addEventListener("change", async (evento) => {
   desenharTurmas();
   evento.target.value = "";   // permite importar o mesmo arquivo de novo
 });
+
+})();

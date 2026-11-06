@@ -39,6 +39,6 @@ Esta versão é um protótipo do fluxo do professor: **login → turma → aluno
 | Integrantes |
 |-------------|
 | Enzo Costa Gonçalves |
-| Eloi luiz martins junior |
-| João Paulo do Amaral de Paula |
 | Gabriel Detomini Rabelo |
+| João Paulo do Amaral de Paula |
+| Eloi luiz martins junior |
